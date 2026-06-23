@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مرايتك الحنينة | أرخص عروض التجميل والأسنان</title>
+    
+    <!-- هنا بنربط ملف الـ CSS اللي هتعمله كمان شوية -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 1. رأس الصفحة (اللوجو واسم الموقع) -->
+    <header>
+        <div class="logo">مرايتك الحنينة 🪞✨</div>
+        <p class="tagline">المراية اللي هتحن على جيبك.. كل عروض التجميل والأسنان في مكان واحد!</p>
+    </header>
+    <!-- زرار فتح نافذة الإضافة -->
+<button id="open-add-modal" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 8px; margin: 15px auto; cursor: pointer; display: block; font-family: inherit; font-size: 16px; font-weight: bold;">➕ إضافة عرض جديد</button>
+
+<!-- النافذة المنبثقة (مخفية تلقائياً) -->
+<div id="add-offer-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box;">
+  <div style="background: #ffffff; padding: 20px; border-radius: 12px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; direction: rtl; max-height: 90vh; overflow-y: auto;">
+    <h3 style="margin: 0 0 5px 0; color: #333; text-align: center;">إضافة عرض جديد</h3>
+    
+    <input type="text" id="new-title" placeholder="عنوان العرض (مثال: تنظيف أسنان)" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;" required />
+    
+    <!-- قائمة المناطق (تأكد إن الـ value نفس الأكواد الإنجليزي عندك) -->
+    <select id="new-area" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;">
+      
+<option value="all">المنطقه<option/>
+<option value="shoubra">شبرا</option>
+<option value="nasr-city">مدينة نصر</option>
+<option value="masr-gdida">مصر الجديدة</option>
+<option value="tagamoa">التجمع الخامس / القاهرة الجديدة</option>
+<option value="maadi">المعادي</option>
+<option value="wust-elbalad">وسط البلد</option>
+<option value="helwan">حلوان</option>
+<option value="shorouk">الشروق</option>
+<option value="obour">العبور</option>
+<option value="rehab">الرحاب</option>
+<option value="madinaty">مدينتي</option>
+<option value="hadayek-ahram">حدائق الأهرام</option>
+<option value="sheikh-zayed">الشيخ زايد</option>
+<option value="giza-square">ميدان الجيزة</option>
+<option value="shobra-elzema">شبرا الخيمة</option>
+<option value="mohandessin">المهندسين</option>
+<option value="dokki">الدقي</option>
+<option value="haram">الهرم</option>
+<option value="faisal">فيصل</option>
+<option value="october">6 أكتوبر </option>
+    </select>
+    <!-- قائمة التخصصات -->
+    <select id="new-specialty" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;">
+      <option value="all">التخصص</option>
+      <option value="teeth">أسنان</option>
+      <option value="laser">تجميل</option>
+      <!-- حط باقي التخصصات اللي عندك هنا بنفس الطريقة -->
+    </select>
+    
+    <input type="text" id="new-details" placeholder="تفاصيل العرض" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;" required />
+    <input type="number" id="new-oldPrice" placeholder="السعر قبل الخصم" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;" required />
+    <input type="number" id="new-newPrice" placeholder="السعر بعد الخصم" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;" required />
+    <!--بيانات التواصل مع المكان-->
+    <input type="url" id="new-pageLink" placeholder="رابط صفحة العيادة (https://...)" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;" required />
+<input type="tel" id="new-whatsapp" placeholder="رقم الواتساب  (مثال: 010xxxxxxxx)" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;" required />
+    
+    <!-- خيار العرض الدائم وتحديد التاريخ -->
+    <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #555; cursor: pointer;">
+      <input type="checkbox" id="is-permanent"> العرض متاح ليكي دائماً؟
+    </label>
+    
+    <div id="expiry-date-container">
+      <label style="display: block; font-size: 12px; color: #777; margin-bottom: 4px;">تاريخ انتهاء العرض:</label>
+      <input type="date" id="new-expiry" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; width: 100%; box-sizing: border-box;" />
+    </div>
+
+    <!-- أزرار التحكم -->
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <button id="submit-offer" style="flex: 1; background: #28a745; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">حفظ العرض</button>
+      <button id="close-modal" style="flex: 1; background: #dc3545; color: white; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer;">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+
+    <!-- 2. الجزء الخاص بالفلاتر (علشان البنت تختار منطقتها) -->
+    <section class="filters-section">
+        <h3> بتدوري على عرض فين؟ 🔍</h3>
+        <div class="search-container">
+    <input type="text" id="search-input" placeholder="اكتبي اسم العيادة أو العرض اللي بتدوري عليه... 🔍">
+</div>
+        <div class="filters-container">
+ <select id="area-filter">
+<option value="all">كل المناطق</option>
+<option value="shoubra">شبرا</option>
+<option value="nasr-city">مدينة نصر</option>
+<option value="masr-gdida">مصر الجديدة</option>
+<option value="tagamoa">التجمع الخامس / القاهرة الجديدة</option>
+<option value="maadi">المعادي</option>
+<option value="wust-elbalad">وسط البلد</option>
+<option value="helwan">حلوان</option>
+<option value="shorouk">الشروق</option>
+<option value="obour">العبور</option>
+<option value="rehab">الرحاب</option>
+<option value="madinaty">مدينتي</option>
+<option value="hadayek-ahram">حدائق الأهرام</option>
+<option value="sheikh-zayed">الشيخ زايد</option>
+<option value="giza-square">ميدان الجيزة</option>
+<option value="shobra-elzema">شبرا الخيمة</option>
+<option value="mohandessin">المهندسين</option>
+<option value="dokki">الدقي</option>
+<option value="haram">الهرم</option>
+<option value="faisal">فيصل</option>
+<option value="october">6 أكتوبر </option>
+</select>
+
+<select id="specialty-filter">
+<option value="all">كل التخصصات</option>
+<option value="laser">تجميل </option>
+<option value="teeth">أسنان</option>
+</select>
+    <!-- 3. الجزء اللي هيتعرض فيه كروت العيادات -->
+    <main class="offers-container">
+      
+    </main>
+    <div id="no-results" class="no-results-msg" style="display: none;">
+    اسفين يا قمر، مفيش عروض بالاسم ده أو في المنطقة دي دلوقتي 💔
+</div>
+
+    <!-- هنا بنربط ملف الجافا سكريبت اللي هتعمله في الآخر -->
+    <script src="script.js"></script>
+</body>
+</html>
