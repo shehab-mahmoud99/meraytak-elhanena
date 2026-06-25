@@ -7,6 +7,7 @@
     
     <!-- هنا بنربط ملف الـ CSS اللي هتعمله كمان شوية -->
     <link rel="stylesheet" href="style.css">
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="0fd0bb37-c65d-49c5-89e7-703955432de8"></script>
 </head>
 <body>
 
@@ -14,9 +15,11 @@
     <header>
         <div class="logo">مرايتك الحنينة 🪞✨</div>
         <p class="tagline">المراية اللي هتحن على جيبك.. كل عروض التجميل والأسنان في مكان واحد!</p>
+        <button id="darkModeToggle" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; margin-top: 5px;">🌙 الوضع الليلي</button>
+<button id="show-fav-btn" onclick="filterFavorites()" style="padding: 10px 20px; background: #FFA4B6; color: white; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; margin: 5px;">🩷 اللي دخلوا قلبي</button>
     </header>
     <!-- زرار فتح نافذة الإضافة -->
-<button id="open-add-modal" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 8px; margin: 15px auto; cursor: pointer; display: block; font-family: inherit; font-size: 16px; font-weight: bold;">➕ إضافة عرض جديد</button>
+<button id="open-add-modal" style="padding: 12px 20px; background: #FFB7C5; color: white; border: none; border-radius: 8px; margin: 15px auto; cursor: pointer; display: block; font-family: inherit; font-size: 16px; font-weight: bold;">➕ إضافة عرض جديد</button>
 
 <!-- النافذة المنبثقة (مخفية تلقائياً) -->
 <div id="add-offer-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box;">
@@ -120,6 +123,7 @@
 <option value="laser">تجميل </option>
 <option value="teeth">أسنان</option>
 </select>
+<button id="clearFiltersBtn" class="clear-btn">✨ عرض كل العروض</msg></button>
     <!-- 3. الجزء اللي هيتعرض فيه كروت العيادات -->
     <main class="offers-container">
       
