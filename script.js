@@ -229,14 +229,21 @@ visibleCardsCount++;
                     body: JSON.stringify(newOffer)
                 });
 
-                alert("تمت إضافة العرض بنجاح ونور في الموقع 🎉");
-                location.reload(); 
+                // الرسالة المخصصة الشيك بدون تدخل المتصفح وبدون اسمك الشخصي 😉🎉
+                showToast("تمت إضافة العرض بنجاح ونور في الموقع 🎉");
+                
+                // تأخير بسيط لمدة ثلاث ثواني عشان البنت تلحق تقرأ الرسالة قبل ما الصفحة تعمل ريفريش
+                setTimeout(() => {
+                    location.reload();
+                }, 3000);
+
             } catch (error) {
                 console.error("خطأ أثناء الإضافة:", error);
-                alert("حصلت مشكلة أثناء إرسال البيانات!");
+                showToast("حصلت مشكلة أثناء إرسال البيانات! ❌");
                 submitOfferBtn.innerText = "حفظ العرض";
                 submitOfferBtn.disabled = false;
             }
+
         });
     }
 });
@@ -261,24 +268,52 @@ if (darkModeToggle) {
             darkModeToggle.innerText = "🌙 الوضع الليلي";
         }
     });
+}// دالة سحرية لإظهار رسالة شيك بدون تدخل المتصفح وبدون اسمك
+function showToast(message) {
+    // لو الرسالة مش موجودة في الصفحة ننشئها فوراً
+    let toast = document.getElementById('toast-msg');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'toast-msg';
+        toast.className = 'custom-toast';
+        document.body.appendChild(toast);
+    }
+    
+    // حط النص واظهر الرسالة
+    toast.innerText = message;
+    toast.classList.add('show');
+    
+    // اخفي الرسالة تلقائياً بعد 3 ثواني
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
 }
-// دالة حفظ المفضلة وتغيير شكل القلب 💖
+
+// دالة حفظ المفضلة المتعدلة بدون alert
 function toggleFav(btn) {
+    const cardTitle = btn.closest('.card').querySelector('h3').innerText;
+
     if (btn.innerText === "💖") {
-        btn.innerText = "🩷"; // يقلب روز
-        alert("العرض دخل القلب جوة.. متقلقيش مش هيضيع 😉💖");
+        btn.innerText = "🩷"; 
+        
+        // استبدلنا الـ alert بالرسالة الجديدة الشيك هنا 😉
+        showToast("العرض دخل القلب جوة.. متقلقيش مش هيضيع 😉🩷");
+
+        if (window.umami) {
+            umami.track('حفظ في المفضلة', { 'اسم_العرض': cardTitle });
+        }
     } else {
         btn.innerText = "💖";
     }
 }
-// دالة فلترة العروض وعرض المفضلة فقط
+
+// دالة فلترة المفضلة المتعدلة بدون alert
 function filterFavorites() {
     const cards = document.querySelectorAll('.card');
     let hasFav = false;
 
     cards.forEach(card => {
         const favBtn = card.querySelector('.fav-btn');
-        // لو القلب مقلوب روز (🩷) يظهر الكارت، لو لسه (💖) يخفيه
         if (favBtn && favBtn.innerText === "🩷") {
             card.style.display = "block";
             hasFav = true;
@@ -287,27 +322,10 @@ function filterFavorites() {
         }
     });
 
-    // لو مفيش أي عرض في المفضلة نطلع لها رسالة رقيقة
     if (!hasFav) {
-        alert("قلبك لسه فاضي يا قمر.. مفيش عروض هنا لسه! 🩷");
-        // نرجع نظهر كل الكروت تاني عشان متفتكرش الموقع عطل
+        // استبدلنا الـ alert هنا كمان عشان اسمك يختفي تماماً
+        showToast("قلبك لسه فاضي يا قمر.. مفيش عروض هنا لسه! 🩷");
         cards.forEach(card => card.style.display = "block");
     }
-}
-// دالة حفظ المفضلة مع إرسال التفاعل للوحة الإحصائيات
-function toggleFav(btn) {
-    // جلب عنوان العرض عشان نعرف أنهي واحد عجبها بالظبط
-    const cardTitle = btn.closest('.card').querySelector('h3').innerText;
-
-    if (btn.innerText === "💖") {
-        btn.innerText = "🩷"; // يقلب روز
-        alert("العرض دخل القلب جوة.. متقلقيش مش هيضيع 😉🩷");
-
-        // السطر السحري اللي بيبعت الإحصائية لـ Umami مخفي
-        if (window.umami) {
-            umami.track('حفظ في المفضلة', { 'اسم_العرض': cardTitle });
-        }
-    } else {
-        btn.innerText = "💖";
-    }
-}
+                                                                                                                                                    }
+                    
