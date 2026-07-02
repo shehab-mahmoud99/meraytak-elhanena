@@ -37,13 +37,13 @@ header {
     padding: 25px 15px;
 }
 
-.filters-section h3 {
+filters-section h3 {
     color: #4A4A4A;
     margin-bottom: 15px;
     font-size: 18px;
 }
 
-..filters-container {
+filters-container {
     display: flex;
     justify-content: center;
     gap: 10px; /* المسافة بين الفلترين */
