@@ -13,51 +13,127 @@
 
     <!-- 1. رأس الصفحة (اللوجو واسم الموقع) -->
     <header>
+      
         <div class="logo">مرايتك الحنينة 🪞✨</div>
         <p class="tagline">المراية اللي هتحن على جيبك.. كل عروض التجميل والأسنان في مكان واحد!</p>
+        <!-- بنر مرايتك بتقولك إيه ✨ -->
+<div class="mirror-banner">
+    <div class="banner-content">
+<span class="banner-icon">🪞✨</span>
+        <div class="banner-text">
+            <h3>مرايتك بتقولك إيه النهارده؟</h3>
+            <p id="daily-advice">جاري تحميل نصيحتك الحنينة...</p>
+        </div>
+    </div>
+</div>
+<!-- زرار فتح/قفل التحدي -->
+<div style="text-align: center; margin: 20px 0;">
+    <button id="toggle-challenge-btn" class="action-day-btn" style="padding: 12px 24px; font-size: 1rem;">
+        ✨ يلا ابدأي تحدي ال21 يوم للنضاره وانتي الكسبانه ✨
+    </button>
+</div>
+
+<!-- سكشن التحدي ضفنا عليه كلاس hidden -->
+<section class="challenge-section hidden" id="challenge-section">
+    <div class="challenge-header">
+        <h2>✨ تحدي الـ 21 يوم للجمال والنضارة ✨</h2>
+        <p>مرايتك الحنينة معاكي خطوة بخطوة.. كملي التحدي وشوفي النتيجة بنفسك!</p>
+        
+        <!-- شريط التقدم -->
+        <div class="progress-container">
+            <div class="progress-bar" id="challenge-progress">0%</div>
+        </div>
+        <p class="progress-text">لقد أتممتِ <span id="completed-days-count">0</span> من أصل 21 يوم 🎉</p>
+
+        <!-- أزرار اختيار الأسابيع لتقليل الزحمة -->
+        <div class="weeks-tabs">
+            <button class="week-tab active" data-week="1">الأسبوع الأول</button>
+            <button class="week-tab" data-week="2">الأسبوع الثاني</button>
+            <button class="week-tab" data-week="3">الأسبوع الثالث</button>
+        </div>
+    </div>
+
+    <!-- حاوية الأيام المرنة -->
+    <div class="days-list-container" id="days-list">
+        <!-- الأيام بتظهر هنا ديناميكياً على حسب الأسبوع المختار -->
+    </div>
+</section>
+
+<!-- نافذة الاحتفال والرسالة اللطيفة (Popup Modal) -->
+<div class="celebration-modal" id="celebration-modal">
+    <div class="modal-content">
+        <div class="modal-logo">مرايتك الحنينة 🪞✨</div>   
+        <h3 id="modal-title">عاش يا قمر! 🎉</h3>
+        <p id="modal-message">رسالة التشجيع هتظهر هنا...</p>
+        <button class="close-modal-btn" onclick="closeCelebrationModal()">شكراً يا مرايتي الحنينة ❤️</button>
+    </div>
+</div>
+
+<!-- حاوية القلوب والصواريخ اللي هتطير في الشاشة -->
+<div class="canvas-overlay" id="effects-container"></div>
+
         <button id="darkModeToggle" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 14px; margin-top: 5px;">🌙 الوضع الليلي</button>
 <button id="show-fav-btn" onclick="filterFavorites()" style="padding: 10px 20px; background: #FFA4B6; color: white; border: none; border-radius: 20px; font-weight: bold; cursor: pointer; margin: 5px;">🩷 اللي دخلوا قلبي</button>
     </header>
     <!-- زرار فتح نافذة الإضافة -->
-<button id="open-add-modal" style="padding: 12px 20px; background: #FFB7C5; color: white; border: none; border-radius: 8px; margin: 15px auto; cursor: pointer; display: block; font-family: inherit; font-size: 16px; font-weight: bold;">➕ إضافة عرض جديد</button>
+<button id="open-add-modal" style="padding: 12px 20px; background: #FFB7C5; color: white; border: none; border-radius: 8px; margin: 15px auto; cursor: pointer; display: block; font-family: inherit; font-size: 16px; font-weight: bold;">➕ لو عيادة ضيف عرضك الحنين من هنا</button>
 
 <!-- النافذة المنبثقة (مخفية تلقائياً) -->
 <div id="add-offer-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 10000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box;">
   <div style="background: #ffffff; padding: 20px; border-radius: 12px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; direction: rtl; max-height: 90vh; overflow-y: auto;">
     <h3 style="margin: 0 0 5px 0; color: #333; text-align: center;">إضافة عرض جديد</h3>
     
-    <input type="text" id="new-title" placeholder="عنوان العرض (مثال: تنظيف أسنان)" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;" required />
-    
-    <!-- قائمة المناطق (تأكد إن الـ value نفس الأكواد الإنجليزي عندك) -->
+    <input type="text" id="new-title" placeholder="اسم العيادة ( مثال : كوين للتجميل )" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;" required />
+    <!-- قائمة المناطق (تأكد إن الـ value نفس الأكواد بالعربي عندك) -->
     <select id="new-area" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;">
       
 <option value="all">المنطقه<option/>
-<option value="shoubra">شبرا</option>
-<option value="nasr-city">مدينة نصر</option>
-<option value="masr-gdida">مصر الجديدة</option>
-<option value="tagamoa">التجمع الخامس / القاهرة الجديدة</option>
-<option value="maadi">المعادي</option>
-<option value="wust-elbalad">وسط البلد</option>
-<option value="helwan">حلوان</option>
-<option value="shorouk">الشروق</option>
-<option value="obour">العبور</option>
-<option value="rehab">الرحاب</option>
-<option value="madinaty">مدينتي</option>
-<option value="hadayek-ahram">حدائق الأهرام</option>
-<option value="sheikh-zayed">الشيخ زايد</option>
-<option value="giza-square">ميدان الجيزة</option>
-<option value="shobra-elzema">شبرا الخيمة</option>
-<option value="mohandessin">المهندسين</option>
-<option value="dokki">الدقي</option>
-<option value="haram">الهرم</option>
-<option value="faisal">فيصل</option>
-<option value="october">6 أكتوبر </option>
+<option value="شبرا مصر">📍شبرا مصر</option>
+<option value="مدينة نصر">📍مدينة نصر</option>
+<option value="مصر الجديدة">📍مصر الجديدة</option>
+<option value="القاهرة الجديدة">📍القاهرة الجديدة</option>
+<option value="المعادي">📍المعادي</option>
+<option value="وسط البلد">📍وسط البلد</option>
+<option value="حلوان">📍حلوان</option>
+<option value="الشروق">📍الشروق</option>
+<option value="الرحاب">📍الرحاب</option>
+<option value="مدينتي">📍مدينتي</option>
+<option value="ألسيدة زينب">📍ألسيدة زينب</option>
+<option value="دار ألسلام">📍دار ألسلام</option>
+<option value="طرة">📍طرة</option>
+<option value="ألعباسية">📍ألعباسية</option>
+<option value="الرحاب">📍الرحاب</option>
+<option value="شبرا الخيمة">📍شبرا الخيمة</option>
+<option value="العبور">📍العبور</option>
+<option value="القليوبية">📍القليوبية</option>
+<option value="حدائق الأهرام">📍حدائق الأهرام</option>
+<option value="شيخ زايد">📍الشيخ زايد</option>
+<option value="ميدان الجيزة">📍ميدان الجيزة</option>
+<option value="ألمهندسين">📍ألمهندسين</option>
+<option value="الدقي">📍الدقي</option>
+<option value="الهرم">📍الهرم</option>
+<option value="فيصل">📍فيصل</option>
+<option value="6 أكتوبر">📍6 أكتوبر </option>
+<option value="امبابه">📍امبابه </option>
+<option value="الوراق">📍الوراق</option>
+<option value="أرض أللواء">📍أرض أللواء</option>
+<option value="بولاق الدكرور">📍بولاق الدكرور</option>
     </select>
     <!-- قائمة التخصصات -->
     <select id="new-specialty" style="padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit;">
       <option value="all">التخصص</option>
-      <option value="teeth">أسنان</option>
-      <option value="laser">تجميل</option>
+      <optgroup label="تخصصات التجميل والجلدية">
+    <option value="ليزر إزالة الشعر">ليزر إزالة الشعر</option>
+    <option value="العناية بالبشرة والوجه">العناية بالبشرة والوجه</option>
+    <option value="حقن تجميلي">حقن تجميلي (فيلر، بوتوكس)</option>
+    <option value="تخسيس ونحت القوام">تخسيس ونحت القوام</option>
+</optgroup>
+      <optgroup label="تخصصات طب الأسنان">
+    <option value="تنظيف وتبييض الأسنان">تنظيف وتبييض الأسنان</option>
+    <option value="تقويم الأسنان">تقويم الأسنان</option>
+    <option value="حشو وعلاج الجذور">حشو وعلاج الجذور</option>
+    <option value="زراعة وتركيبات الأسنان">زراعة وتركيبات الأسنان</option>
+</optgroup>
       <!-- حط باقي التخصصات اللي عندك هنا بنفس الطريقة -->
     </select>
     
@@ -87,7 +163,7 @@
 </div>
 
 
-    <!-- 2. الجزء الخاص بالفلاتر (علشان البنت تختار منطقتها) -->
+    <!--  الجزء الخاص بالفلاتر (علشان البنت تختار منطقتها) -->
     <section class="filters-section">
         <h3> بتدوري على عرض فين؟ 🔍</h3>
         <div class="search-container">
@@ -96,42 +172,115 @@
         <div class="filters-container">
  <select id="area-filter">
 <option value="all">كل المناطق</option>
-<option value="shoubra">شبرا</option>
-<option value="nasr-city">مدينة نصر</option>
-<option value="masr-gdida">مصر الجديدة</option>
-<option value="tagamoa">التجمع الخامس / القاهرة الجديدة</option>
-<option value="maadi">المعادي</option>
-<option value="wust-elbalad">وسط البلد</option>
-<option value="helwan">حلوان</option>
-<option value="shorouk">الشروق</option>
-<option value="obour">العبور</option>
-<option value="rehab">الرحاب</option>
-<option value="madinaty">مدينتي</option>
-<option value="hadayek-ahram">حدائق الأهرام</option>
-<option value="sheikh-zayed">الشيخ زايد</option>
-<option value="giza-square">ميدان الجيزة</option>
-<option value="shobra-elzema">شبرا الخيمة</option>
-<option value="mohandessin">المهندسين</option>
-<option value="dokki">الدقي</option>
-<option value="haram">الهرم</option>
-<option value="faisal">فيصل</option>
-<option value="october">6 أكتوبر </option>
+<option value="شبرا مصر">📍شبرا مصر</option>
+<option value="مدينة نصر">📍مدينة نصر</option>
+<option value="مصر الجديدة">📍مصر الجديدة</option>
+<option value="القاهرة الجديدة">📍القاهرة الجديدة</option>
+<option value="المعادي">📍المعادي</option>
+<option value="وسط البلد">📍وسط البلد</option>
+<option value="حلوان">📍حلوان</option>
+<option value="الشروق">📍الشروق</option>
+<option value="الرحاب">📍الرحاب</option>
+<option value="مدينتي">📍مدينتي</option>
+<option value="ألسيدة زينب">📍ألسيدة زينب</option>
+<option value="دار ألسلام">📍دار ألسلام</option>
+<option value="طرة">📍طرة</option>
+<option value="ألعباسية">📍ألعباسية</option>
+<option value="الرحاب">📍الرحاب</option>
+<option value="شبرا الخيمة">📍شبرا الخيمة</option>
+<option value="العبور">📍العبور</option>
+<option value="القليوبية">📍القليوبية</option>
+<option value="حدائق الأهرام">📍حدائق الأهرام</option>
+<option value="شيخ زايد">📍الشيخ زايد</option>
+<option value="ميدان الجيزة">📍ميدان الجيزة</option>
+<option value="ألمهندسين">📍ألمهندسين</option>
+<option value="الدقي">📍الدقي</option>
+<option value="الهرم">📍الهرم</option>
+<option value="فيصل">📍فيصل</option>
+<option value="6 أكتوبر">📍6 أكتوبر </option>
+<option value="امبابه">📍امبابه </option>
+<option value="الوراق">📍الوراق</option>
+<option value="أرض أللواء">📍أرض أللواء</option>
+<option value="بولاق الدكرور">📍بولاق الدكرور</option>
 </select>
 
 <select id="specialty-filter">
-<option value="all">كل التخصصات</option>
-<option value="laser">تجميل </option>
-<option value="teeth">أسنان</option>
+<option value="all">التخصص</option>
+      <optgroup label="تخصصات التجميل والجلدية">
+    <option value="ليزر إزالة الشعر">ليزر إزالة الشعر</option>
+    <option value="العناية بالبشرة والوجه">العناية بالبشرة والوجه</option>
+    <option value="حقن تجميلي">حقن تجميلي (فيلر، بوتوكس)</option>
+    <option value="تخسيس ونحت القوام">تخسيس ونحت القوام</option>
+</optgroup>
+      <optgroup label="تخصصات طب الأسنان">
+    <option value="تنظيف وتبييض الأسنان">تنظيف وتبييض الأسنان</option>
+    <option value="تقويم الأسنان">تقويم الأسنان</option>
+    <option value="حشو وعلاج الجذور">حشو وعلاج الجذور</option>
+    <option value="زراعة وتركيبات الأسنان">زراعة وتركيبات الأسنان</option>
+</optgroup>
 </select>
-<button id="clearFiltersBtn" class="clear-btn">✨ عرض كل العروض</msg></button>
-    <!-- 3. الجزء اللي هيتعرض فيه كروت العيادات -->
+<button id="clearFiltersBtn" class="clear-btn">✨ عرض كل العروض</button>
+    <!-- الجزء اللي هيتعرض فيه كروت العيادات -->
     <main class="offers-container">
       
     </main>
     <div id="no-results" class="no-results-msg" style="display: none;">
     اسفين يا قمر، مفيش عروض بالاسم ده أو في المنطقة دي دلوقتي 💔
 </div>
-
+<!-- نافذة تفاصيل العرض المتجاوبة (Responsive Modal) -->
+<div id="offerModal" class="modal-overlay">
+    <div class="modal-content">
+        <!-- مقبض السحب للموبايل -->
+        <div class="modal-drag-handle"></div>
+        
+<!--رأس النافذة -->
+        <div class="modal-header">
+            <h2 id="modalTitle">اسم العرض الافتراضي</h2>
+            <button id="closeModalBtn" class="modal-close-btn" aria-label="إغلاق النافذة">&times;</button>
+        </div>
+        
+        <!-- جسم النافذة -->
+        <div class="modal-body">
+            <!-- الشارات والتصنيفات -->
+            <div class="modal-badges">
+                <span id="modalArea" class="modal-badge">المنطقة</span>
+                <span id="modalSpecialty" class="modal-badge">التخصص</span>
+            </div>
+            
+            <!-- تفاصيل العرض الكاملة -->
+            <div class="modal-details-box">
+                <h3>تفاصيل العرض:</h3>
+                <p id="modalDetails">هنا تظهر تفاصيل العرض كاملة ومشروحة بالتفصيل المريح للعين...</p>
+            </div>
+            
+            <!-- منطقة الأسعار -->
+            <div class="modal-price-container">
+                <div class="price-block old-price-block">
+                    <span class="price-label">السعر قبل:</span>
+                    <span id="modalOldPrice" class="price-value">000</span> <small>ج.م</small>
+                </div>
+                <div class="price-block new-price-block">
+                    <span class="price-label">السعر الحالي:</span>
+                    <span id="modalNewPrice" class="price-value">000</span> <small>ج.م</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- تذييل النافذة (أزرار التفاعل) -->
+        <div class="modal-footer">
+            <a id="modalWhatsappBtn" href="#" target="_blank" class="modal-btn btn-whatsapp">
+                <span>احجزي الآن عبر الواتساب</span>
+                <span class="btn-icon">💬</span>
+            </a>
+            <button id="modalShareBtn" class="modal-btn btn-share">
+                <span>هتبعتيه لحبايبك ؟ </span>
+                <span class="btn-icon">🔗</span>
+            </button>
+<button class="share-btn" onclick="shareAzoma(document.getElementById('modalTitle').textContent)" style="flex: 1; text-align: center; border: none; background: #ffe4e6; color: #e11d48; padding: 10px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer;">🎁 اعزمي صاحبتك وخليكي حنينة</button>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <!-- هنا بنربط ملف الجافا سكريبت اللي هتعمله في الآخر -->
     <script src="script.js"></script>
 </body>
